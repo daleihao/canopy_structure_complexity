@@ -1,0 +1,9 @@
+function [Area1, Area2, Area3] = CalculateArea(lat)
+radius = 6378137;
+res = 0.1;
+height = radius * res*pi/180;
+width1 = radius*cos(lat*pi/180) * res*pi/180;
+width2 = radius*(cos((lat-res/2)*pi/180)+cos((lat+res/2)*pi/180))/2 * res*pi/180;
+Area1 = width1.*height/1e6;
+Area2 = width2.*height/1e6;
+Area3 = (pi/180)*radius*radius* abs(sin((lat+res/2)*(pi/180))-sin((lat-res/2)*(pi/180)))*res/1e6;

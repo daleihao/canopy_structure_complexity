@@ -1,0 +1,32 @@
+function plot_global_map_Amazon(lats, lons, sw_total, title_text, max_clr)
+colors_single = brewermap(10, 'Spectral');
+colormap(colors_single)
+
+axis equal
+m_proj('robinson','lat',[-62 90],'lon',[-180 180]); % robinson Mollweide
+%m_coast('color','k');
+hold on
+m_grid('tickdir','in','linestyle','none','backcolor',[.9 .99 1], ...%'xticklabels',[], ...
+    'fontsize',8);
+m_pcolor(lons,lats,sw_total);
+M=m_shaperead('landareas'); 
+for k=1:length(M.ncst)    
+     m_line(M.ncst{k}(:,1),M.ncst{k}(:,2),'color','k'); 
+end; 
+shading flat;
+caxis([0,max_clr])
+%colormap(m_colmap('jet','step',10));
+%m_text(-170,80,sub_text,'fontsize',10)
+hcb = colorbar;
+%hcb.Title.String = 'gC m^{-2} day^{-1}';
+x1=get(gca,'position');
+x=get(hcb,'Position');
+x(3)=0.03;
+set(hcb,'Position',x)
+set(gca,'position',[0.05 0 0.78 1])
+
+title(title_text,'fontsize',10, 'fontweight', 'bold')
+%view(0,90);
+hold off
+title_text = replace(title_text, '/', '_');
+close all
